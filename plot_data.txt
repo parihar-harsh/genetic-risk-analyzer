@@ -1,0 +1,8 @@
+Disease	Penetrance	LowerCI	UpperCI
+"Age-related Macular Degeneration"	0	0	10
+"Coronary Artery Disease"	115	105	100
+"Type 2 Diabetes"	43.75	33.75	53.75
+"Hereditary Breast and Ovarian Cancer"	0	0	10
+"Hypertension (PRS)"	50	40	60
+"Coronary Artery Disease (PRS)"	65.2174	55.2174	75.2174
+"Type 2 Diabetes (PRS)"	63.6839	53.6839	73.6839

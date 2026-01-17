@@ -1,0 +1,22 @@
+##fileformat=VCFv4.2
+##fileDate=20250414
+##source=MyVariantCallerV1.0
+##reference=GRCh38
+##contig=<ID=7,length=159138663>
+##contig=<ID=9,length=138394717>
+##contig=<ID=10,length=133797422>
+##contig=<ID=17,length=83257441>
+##contig=<ID=19,length=58617616>
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read Depth">
+##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype Quality">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	SAMPLE1
+7	117559594	rs113993960	CTT	C	1500	PASS	DP=110	GT:GQ:DP	1/1:99:110
+9	22125503	rs10757274	G	A	85	PASS	DP=45	GT:GQ:DP	0/1:90:45
+10	114758349	rs7903146	C	T	95	PASS	DP=55	GT:GQ:DP	0/1:95:55
+17	43045802	rs80357906	C	CT	950	PASS	DP=88	GT:GQ:DP	0/1:99:88
+19	1109000	rs5925	C	T	700	PASS	DP=75	GT:GQ:DP	1/1:99:75
+19	44908684	rs429358	C	T	600	PASS	DP=92	GT:GQ:DP	0/0:99:92
+17	7675088	rs741766	C	T	15	q10	DP=8	GT:GQ:DP	0/1:12:8
+10	60490	rs268	G	A	250	PASS	DP=60	GT:GQ:DP	0/0:99:60
