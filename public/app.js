@@ -12,6 +12,7 @@ const scoresList = document.querySelector("#scores-list");
 const warningsList = document.querySelector("#warnings-list");
 const findingCount = document.querySelector("#finding-count");
 const exportButton = document.querySelector("#export-button");
+const newAnalysisButton = document.querySelector("#new-analysis-button");
 let selectedFile = null;
 let latestReport = null;
 
@@ -213,7 +214,8 @@ function renderReport(report) {
   renderScores(report);
   renderWarnings(report);
   resultsSection.hidden = false;
-  resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.body.classList.add("has-results");
+  resultsSection.scrollTop = 0;
 }
 
 form.addEventListener("submit", async (event) => {
@@ -262,4 +264,10 @@ exportButton.addEventListener("click", () => {
   link.download = `helix-report-${new Date().toISOString().slice(0, 10)}.json`;
   link.click();
   URL.revokeObjectURL(link.href);
+});
+
+newAnalysisButton.addEventListener("click", () => {
+  resultsSection.hidden = true;
+  document.body.classList.remove("has-results");
+  document.querySelector("#vcf-file").focus();
 });

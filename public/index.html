@@ -16,8 +16,8 @@
         <span>GeneCheck</span>
       </a>
       <div class="header-status">
-        <a href="#analyzer">Analyzer</a>
-        <a href="#coverage">Coverage</a>
+        <span>GRCh38</span>
+        <span>11,511 alleles</span>
         <span class="research-badge">Educational use</span>
       </div>
     </header>
@@ -46,19 +46,6 @@
           <div class="evidence-row"><span>Disease groups</span><strong>8</strong></div>
           <div class="evidence-row"><span>ClinVar release</span><strong>27 Jun 2026</strong></div>
           <div class="visual-note">Pathogenic and likely pathogenic records with consensus or expert review.</div>
-        </div>
-      </section>
-
-      <section id="coverage" class="coverage" aria-labelledby="coverage-title">
-        <div>
-          <span class="step-label">Panel coverage</span>
-          <h2 id="coverage-title">Eight inherited disease groups</h2>
-        </div>
-        <div class="coverage-list">
-          <span>Breast & ovarian cancer</span><span>Lynch syndrome</span>
-          <span>Cystic fibrosis</span><span>Marfan syndrome</span>
-          <span>Familial hypercholesterolemia</span><span>Neurofibromatosis type 1</span>
-          <span>Hemochromatosis</span><span>Alpha-1 antitrypsin deficiency</span>
         </div>
       </section>
 
@@ -124,7 +111,10 @@
             <span class="step-label">Analysis complete</span>
             <h2>Variant review</h2>
           </div>
-          <button id="export-button" class="secondary-button" type="button">Export JSON</button>
+          <div class="result-actions">
+            <button id="new-analysis-button" class="secondary-button" type="button">New analysis</button>
+            <button id="export-button" class="secondary-button" type="button">Export JSON</button>
+          </div>
         </div>
         <div id="summary-grid" class="summary-grid"></div>
         <div id="report-notice" class="report-notice"></div>
@@ -151,15 +141,6 @@
         </div>
       </section>
 
-      <section class="limits">
-        <span class="step-label">Before you continue</span>
-        <h2>Understand what this report can—and cannot—tell you.</h2>
-        <div class="limits-grid">
-          <article><span>01</span><h3>Not a diagnosis</h3><p>Results are educational database annotations and require confirmation by an accredited laboratory and qualified clinician.</p></article>
-          <article><span>02</span><h3>Reference dependent</h3><p>Coordinates, alleles, normalization, ancestry, and genome build must agree for an interpretation to be meaningful.</p></article>
-          <article><span>03</span><h3>Privacy by design</h3><p>Uploads are held in memory for one request and are neither persisted nor included in application logs.</p></article>
-        </div>
-      </section>
     </main>
 
     <footer>
