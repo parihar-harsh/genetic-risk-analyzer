@@ -84,7 +84,13 @@ export function createApp(database) {
     etag: true,
     maxAge: config.isProduction ? "1h" : 0,
     setHeaders(response, filePath) {
-      if (filePath.endsWith("index.html")) response.setHeader("cache-control", "no-cache");
+      if (
+        filePath.endsWith("index.html") ||
+        filePath.endsWith(".css") ||
+        filePath.endsWith(".js")
+      ) {
+        response.setHeader("cache-control", "no-cache");
+      }
     }
   }));
   app.get("/{*path}", (_request, response) => response.sendFile(path.join(root, "public", "index.html")));
