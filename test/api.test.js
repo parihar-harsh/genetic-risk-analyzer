@@ -86,5 +86,5 @@ test("unknown API routes return JSON 404 rather than the SPA", async () => {
 test("SPA fallback serves the application", async () => {
   const response = await fetch(`${baseUrl}/any/client/route`);
   assert.equal(response.status, 200);
-  assert.match(await response.text(), /Genomic Evidence Console/);
+  assert.match(await response.text(), /GeneCheck/);
 });
