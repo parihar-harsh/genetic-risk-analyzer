@@ -4,37 +4,55 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Privacy-first educational VCF variant interpretation">
-    <title>Helix — Genetic Variant Explorer</title>
+    <title>Variant OS — Genomic Evidence Console</title>
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="/" aria-label="Helix home">
+      <a class="brand" href="/" aria-label="Variant OS home">
         <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 32 32"><path d="M9 3c0 7 14 19 14 26M23 3C23 10 9 22 9 29M11 8h10M12 14h8M12 20h8M11 26h10"/></svg>
+          <svg viewBox="0 0 32 32"><path d="M5 7h6l5 18 5-18h6M5 25h6M21 25h6"/></svg>
         </span>
-        <span>HELIX</span>
+        <span>VARIANT<span class="brand-slash">//</span>OS</span>
       </a>
-      <span class="research-badge">Research use only</span>
+      <div class="header-status">
+        <span>GRCh38</span>
+        <span>11,511 alleles</span>
+        <span class="research-badge">Research only</span>
+      </div>
     </header>
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <div class="eyebrow"><span></span> Local-first genomic interpretation</div>
-        <h1 id="hero-title">Make sense of a<br><em>variant call file.</em></h1>
-        <p>Find exact database matches, review call quality, and explore annotations—without storing your genomic file.</p>
-        <div class="trust-row">
-          <span><i aria-hidden="true">01</i> Processed in memory</span>
-          <span><i aria-hidden="true">02</i> Exact allele matching</span>
-          <span><i aria-hidden="true">03</i> No clinical claims</span>
+        <div class="hero-copy">
+          <div class="eyebrow">GENOMIC EVIDENCE CONSOLE / 2.2</div>
+          <h1 id="hero-title">Inspect variants.<br><em>Keep the evidence.</em></h1>
+          <p>Screen a VCF against a source-matched ClinVar panel. Exact alleles, call-quality checks, and traceable evidence—without invented risk scores.</p>
+          <div class="trust-row">
+            <span><i aria-hidden="true"></i>Memory-only processing</span>
+            <span><i aria-hidden="true"></i>Consensus-reviewed data</span>
+            <span><i aria-hidden="true"></i>No file retention</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-header"><span>LIVE_REFERENCE_MAP</span><span>GRCh38</span></div>
+          <div class="sequence-map">
+            <span style="--x:8%;--w:32%"></span><span style="--x:52%;--w:38%"></span>
+            <span style="--x:18%;--w:54%"></span><span style="--x:79%;--w:12%"></span>
+            <span style="--x:5%;--w:21%"></span><span style="--x:36%;--w:58%"></span>
+            <span style="--x:13%;--w:71%"></span><span style="--x:89%;--w:7%"></span>
+            <span style="--x:24%;--w:27%"></span><span style="--x:61%;--w:30%"></span>
+            <span style="--x:6%;--w:42%"></span><span style="--x:57%;--w:24%"></span>
+          </div>
+          <div class="visual-readout"><b>11,511</b><span>indexed alleles</span><b>8</b><span>disease groups</span></div>
         </div>
       </section>
 
       <section class="workspace" aria-labelledby="analyze-title">
         <div class="panel-heading">
           <div>
-            <span class="step-label">Analysis workspace</span>
-            <h2 id="analyze-title">Upload your VCF</h2>
+            <span class="step-label">01 / INPUT STREAM</span>
+            <h2 id="analyze-title">Load a variant file</h2>
           </div>
           <span class="format-note">.VCF · .VCF.GZ</span>
         </div>
@@ -45,8 +63,8 @@
             <div class="upload-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5"/></svg>
             </div>
-            <strong id="file-label">Drop a variant call file here</strong>
-            <span id="file-help">or select a file · maximum 25 MB</span>
+            <strong id="file-label">Drop VCF into the console</strong>
+            <span id="file-help">click to browse · encrypted transit · 25 MB max</span>
           </div>
 
           <div class="field-grid three-fields">
@@ -84,8 +102,8 @@
       <section id="results" class="results" aria-live="polite" hidden>
         <div class="results-heading">
           <div>
-            <span class="step-label">Analysis complete</span>
-            <h2>Variant report</h2>
+            <span class="step-label">02 / EVIDENCE OUTPUT</span>
+            <h2>Analysis report</h2>
           </div>
           <button id="export-button" class="secondary-button" type="button">Export JSON</button>
         </div>
@@ -115,8 +133,8 @@
       </section>
 
       <section class="limits">
-        <span class="step-label">Read before use</span>
-        <h2>Designed to inform review,<br>not replace it.</h2>
+        <span class="step-label">SYSTEM BOUNDARIES</span>
+        <h2>Evidence in.<br>Clinical judgment stays human.</h2>
         <div class="limits-grid">
           <article><span>01</span><h3>Not a diagnosis</h3><p>Results are educational database annotations and require confirmation by an accredited laboratory and qualified clinician.</p></article>
           <article><span>02</span><h3>Reference dependent</h3><p>Coordinates, alleles, normalization, ancestry, and genome build must agree for an interpretation to be meaningful.</p></article>
@@ -126,8 +144,8 @@
     </main>
 
     <footer>
-      <span>HELIX / Genetic Variant Explorer</span>
-      <span>Educational software · Version 2.0</span>
+      <span>VARIANT//OS · Genomic Evidence Console</span>
+      <span>Educational software · Version 2.2</span>
     </footer>
 
     <script type="module" src="/app.js"></script>
