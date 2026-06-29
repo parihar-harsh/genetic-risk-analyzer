@@ -16,8 +16,8 @@
         <span>GeneCheck</span>
       </a>
       <div class="header-status">
-        <span>Analyzer</span>
-        <span>Evidence panel</span>
+        <a href="#analyzer">Analyzer</a>
+        <a href="#coverage">Coverage</a>
         <span class="research-badge">Educational use</span>
       </div>
     </header>
@@ -35,6 +35,11 @@
           </div>
         </div>
         <div class="hero-visual" aria-hidden="true">
+          <div class="visual-symbol">
+            <svg viewBox="0 0 120 120">
+              <path d="M35 14c0 28 50 64 50 92M85 14c0 28-50 64-50 92M43 30h34M48 47h24M48 72h24M43 90h34"/>
+            </svg>
+          </div>
           <div class="visual-header"><span>Current evidence panel</span><span class="panel-status">Active</span></div>
           <div class="evidence-row"><span>Reference assembly</span><strong>GRCh38</strong></div>
           <div class="evidence-row"><span>Indexed alleles</span><strong>11,511</strong></div>
@@ -44,11 +49,29 @@
         </div>
       </section>
 
-      <section class="workspace" aria-labelledby="analyze-title">
+      <section id="coverage" class="coverage" aria-labelledby="coverage-title">
+        <div>
+          <span class="step-label">Panel coverage</span>
+          <h2 id="coverage-title">Eight inherited disease groups</h2>
+        </div>
+        <div class="coverage-list">
+          <span>Breast & ovarian cancer</span><span>Lynch syndrome</span>
+          <span>Cystic fibrosis</span><span>Marfan syndrome</span>
+          <span>Familial hypercholesterolemia</span><span>Neurofibromatosis type 1</span>
+          <span>Hemochromatosis</span><span>Alpha-1 antitrypsin deficiency</span>
+        </div>
+      </section>
+
+      <section id="analyzer" class="workspace" aria-labelledby="analyze-title">
         <div class="panel-heading">
           <div>
             <span class="step-label">Start analysis</span>
             <h2 id="analyze-title">Choose a VCF file</h2>
+            <ol class="step-list">
+              <li><b>1</b><span>Select your file</span></li>
+              <li><b>2</b><span>Confirm sample and build</span></li>
+              <li><b>3</b><span>Review sourced matches</span></li>
+            </ol>
           </div>
           <span class="format-note">.VCF · .VCF.GZ</span>
         </div>
@@ -89,7 +112,7 @@
 
           <div id="form-error" class="alert error" role="alert" hidden></div>
           <button id="analyze-button" class="primary-button" type="submit">
-            <span>Analyze variants</span>
+            <span>Review my file</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
           </button>
         </form>

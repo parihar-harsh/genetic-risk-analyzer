@@ -250,7 +250,7 @@ form.addEventListener("submit", async (event) => {
     showError(error.message || "The analysis could not be completed.");
   } finally {
     analyzeButton.disabled = false;
-    analyzeButton.querySelector("span").textContent = "Analyze variants";
+    analyzeButton.querySelector("span").textContent = "Review my file";
   }
 });
 
