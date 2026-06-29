@@ -1,0 +1,16 @@
+.git
+.gitignore
+.env
+node_modules
+test
+*.log
+genetic_risk_analyzer.cpp
+genetic_risk_analyzer.exe
+json.hpp
+patient001.vcf
+sample_input.vcf
+plot_data.txt
+risk_plot.png
+README.md
+AI_CONTEXT.md
+MANUAL_ACTIONS.md

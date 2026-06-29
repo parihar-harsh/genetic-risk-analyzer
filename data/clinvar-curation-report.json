@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-06-29T06:39:52.786Z",
+  "source": {
+    "name": "ClinVar",
+    "url": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz",
+    "release": "2026-06-27",
+    "genomeBuild": "GRCh38",
+    "md5": "27166aac6887cb7ac10829de69587993",
+    "recordsScanned": 4439382
+  },
+  "inputVariants": 11511,
+  "exactMatchedLoci": 11511,
+  "trustedPanel": true,
+  "trustedPanelLoci": 11511,
+  "curatedEntries": 11511,
+  "unmatchedEntries": 0,
+  "panelSummary": {
+    "diseases": {
+      "Alpha-1 Antitrypsin Deficiency": 24,
+      "Cystic Fibrosis": 773,
+      "Familial Hypercholesterolemia": 768,
+      "Hereditary Breast and Ovarian Cancer": 4234,
+      "Hereditary Hemochromatosis": 108,
+      "Lynch Syndrome": 2965,
+      "Marfan Syndrome": 954,
+      "Neurofibromatosis Type 1": 1685
+    },
+    "genes": {
+      "APOB": 4,
+      "BRCA1": 1690,
+      "BRCA2": 2459,
+      "CFTR": 773,
+      "EPCAM": 1,
+      "FBN1": 954,
+      "HAMP": 2,
+      "HFE": 11,
+      "HJV": 29,
+      "LDLR": 739,
+      "LDLRAP1": 20,
+      "MLH1": 613,
+      "MSH2": 988,
+      "MSH6": 953,
+      "NF1": 1685,
+      "PALB2": 85,
+      "PCSK9": 5,
+      "PMS2": 410,
+      "SERPINA1": 24,
+      "SLC40A1": 11,
+      "TFR2": 55
+    },
+    "classifications": {
+      "Likely pathogenic": 854,
+      "Pathogenic": 7758,
+      "Pathogenic/Likely pathogenic": 2899
+    },
+    "reviewStars": {
+      "2": 6842,
+      "3": 4646,
+      "4": 23
+    }
+  },
+  "legacyComparison": {
+    "exactMatchedLoci": 11511,
+    "unmatchedEntries": 0
+  }
+}

@@ -1,212 +1,130 @@
-# 🧬 Genetic Risk Analyzer
+# Helix Genetic Variant Explorer
 
-A comprehensive C++ tool for analyzing genetic data to assess potential health risks based on known variants, age-specific penetrance, and polygenic risk scores.
+A privacy-first educational web application that matches VCF alternate alleles against a reproducibly curated ClinVar panel and reports sourced classifications and genotype quality.
 
-## 📋 Overview
+> **Not for clinical use.** Results are not diagnoses, validated polygenic risk scores, or personalized probabilities. Confirm findings through an accredited laboratory and a qualified genetics professional.
 
-The Genetic Risk Analyzer is designed to help researchers and individuals understand their genetic predisposition to various diseases by analyzing genomic data from multiple file formats. It combines variant-specific risk assessments with polygenic risk score (PRS) calculations to provide a holistic view of genetic health risks.
+## What changed in version 2
 
-## ✨ Features
+The original C++ CLI remains in `genetic_risk_analyzer.cpp` as historical reference. The production application is now a Node.js web service with:
 
-- **Multiple Input Formats**: Supports VCF files, FASTA files, and manual DNA sequence input
-- **Age-Specific Risk Assessment**: Calculates disease penetrance based on age-specific data
-- **Polygenic Risk Scores**: Computes PRS for common complex diseases
-- **Environmental & Risk Factors**: Incorporates family history, lifestyle factors, and environmental influences
-- **Quality Control**: Validates genotype calls with quality scores and read depth metrics
-- **Visual Reports**: Generates risk assessment plots with confidence intervals using Gnuplot
-- **ACMG Classification Support**: Handles variant classifications (Pathogenic, Likely Pathogenic, VUS, etc.)
+- Responsive, accessible browser interface
+- VCF and gzip-compressed VCF uploads
+- Exact chromosome, position, REF, and ALT matching
+- Required genome-build compatibility with the GRCh38 database
+- Minimal representation normalization for small variants
+- Multi-sample, phased, haploid, and multi-allelic genotype support
+- FORMAT-aware `GT`, `GQ`, and `DP` parsing with INFO/DP fallback
+- Structured parsing warnings and quality review flags
+- No fake baseline probabilities or unvalidated absolute PRS values
+- 11,511 source-matched ClinVar GRCh38 alleles across eight inherited disease groups
+- Only pathogenic/likely pathogenic records with at least two-star consensus or expert review
+- No penetrance, odds ratio, or PRS values are invented
+- In-memory request processing with no genomic-file persistence
+- Security headers, request IDs, rate limits, upload limits, and no-store API responses
+- Automated unit/integration tests and a non-root Docker image
 
-## 🛠️ Requirements
+FASTA and manual DNA entry were intentionally removed. Raw sequence cannot be interpreted as genomic variants without alignment, a reference genome/build, chromosome coordinates, and a proper variant-calling pipeline.
 
-### Dependencies
+## Local development
 
-- **C++ Compiler**: C++11 or later (g++, clang++)
-- **nlohmann/json**: JSON parsing library ([GitHub](https://github.com/nlohmann/json))
-- **Gnuplot**: For generating visualization plots
+Requirements: Node.js 22 or newer.
 
-### System Requirements
-
-- Linux, macOS, or Windows (with appropriate compiler)
-- Minimum 2GB RAM
-- Terminal/Command line access
-
-## 📦 Installation
-
-1. **Clone the repository**:
 ```bash
-   git clone https://github.com/yourusername/genetic-risk-analyzer.git
-   cd genetic-risk-analyzer
+npm ci
+npm run dev
 ```
 
-2. **Install nlohmann/json library**:
-   
-   Download the single-header file:
+Open `http://localhost:3000`.
+
+Run verification:
+
 ```bash
-   wget https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp
+npm run check
+npm audit
 ```
-   
-   Or install via package manager:
+
+## Production
+
+### Node
+
 ```bash
-   # Ubuntu/Debian
-   sudo apt-get install nlohmann-json3-dev
-   
-   # macOS
-   brew install nlohmann-json
+NODE_ENV=production PORT=3000 TRUST_PROXY=1 npm start
 ```
 
-3. **Install Gnuplot** (for visualization):
+Use a TLS-terminating reverse proxy or managed container service. Set `TRUST_PROXY` to the exact proxy hop count; do not blindly trust arbitrary forwarded headers.
+
+### Docker
+
 ```bash
-   # Ubuntu/Debian
-   sudo apt-get install gnuplot
-   
-   # macOS
-   brew install gnuplot
-   
-   # Windows
-   # Download from http://www.gnuplot.info/
+docker build -t genetic-risk-analyzer .
+docker run --read-only --tmpfs /tmp -p 3000:3000 genetic-risk-analyzer
 ```
 
-4. **Compile the program**:
-```bash
-   g++ -std=c++11 -o genetic_analyzer main.cpp -lpthread
+Health endpoint:
+
+```text
+GET /api/v1/health
 ```
 
-## 🚀 Usage
+## Configuration
 
-### Basic Usage
+| Variable | Default | Purpose |
+|---|---:|---|
+| `NODE_ENV` | `development` | Enables production cache behavior |
+| `HOST` | `0.0.0.0` | Listen address |
+| `PORT` | `3000` | Listen port |
+| `TRUST_PROXY` | `0` | Number of trusted reverse-proxy hops |
+| `MAX_UPLOAD_MB` | `25` | Upload limit, constrained to 1–100 MB |
+| `RATE_LIMIT_WINDOW_MS` | `900000` | API rate-limit window |
+| `RATE_LIMIT_MAX` | `60` | Requests per client per window |
 
-Run the program:
-```bash
-./genetic_analyzer
+See `.env.example`.
+
+## API
+
+### `POST /api/v1/analyze`
+
+`multipart/form-data` fields:
+
+- `vcf`: required `.vcf` or `.vcf.gz`
+- `sampleName`: optional exact sample column name; defaults to the first sample
+- `age`: optional integer from 1 through 120
+- `genomeBuild`: required when the build cannot be detected; `GRCh37` or `GRCh38`
+
+The response contains input metadata, summary counts, exact findings, ClinVar evidence metadata, and parser warnings. Scores remain disabled because the curated source does not provide a validated patient-level risk model.
+
+## Privacy and operational limits
+
+- Uploaded bytes live only in process memory for the request.
+- Filenames and genomic contents are not logged.
+- API responses use `Cache-Control: no-store`.
+- The default maximum upload is 25 MB. Whole-genome VCFs should be normalized, filtered, and reduced upstream for this small reference database.
+- Browser/client and reverse-proxy logs remain the deployer’s responsibility.
+- The bundled panel is source-matched to ClinVar GRCh38 release 2026-06-27. ClinVar classifications are submitted assertions, not independent diagnoses.
+- `disease_data.metadata.json` records the dataset build, version, provenance state, and clinical-use approval.
+
+## Repository map
+
+```text
+public/                  Browser UI
+server/app.js            HTTP middleware and routes
+server/vcf.js            Defensive VCF parsing
+server/analyzer.js       Exact matching and annotations
+server/database.js       Database validation and indexing
+server/index.js          Process startup and shutdown
+test/                    Unit and API integration tests
+disease_data.json        Generated ClinVar panel
+disease_data.metadata.json  Pinned source/build/release metadata
+scripts/curate-clinvar.js   Reproducible curation importer
+data/                    Curation and legacy-audit reports
+sample_input.vcf         Synthetic passing-call fixture
+patient001.vcf           Synthetic mixed-call/filter fixture
+genetic_risk_analyzer.*  Legacy C++ implementation
+AI_CONTEXT.md            Current state and AI handoff notes
+MANUAL_ACTIONS.md         Human scientific and deployment work
 ```
 
-The program will guide you through an interactive menu where you can:
+## License
 
-1. **Choose input type**:
-   - VCF file (Variant Call Format)
-   - FASTA file
-   - Manual DNA sequence
-
-2. **Enter your age** for age-specific risk calculations
-
-3. **Provide additional factors**:
-   - Family history of diseases
-   - Smoking status
-   - Other environmental factors
-
-### Input File Formats
-
-#### VCF File Example
-```
-#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  SAMPLE
-chr1    12345   .       A       G       30      PASS    .       GT:DP   0/1:25
-chr2    67890   .       C       T       35      PASS    .       GT:DP   1/1:30
-```
-
-#### FASTA File Example
-```
->Sample_Sequence
-ATGCGATCGATCGATCGATCGATCGATCGATCGATCG
-GCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAG
-```
-
-#### disease_data.json Structure
-```json
-[
-  {
-    "chromosome": "chr17",
-    "position": 43044295,
-    "ref": "G",
-    "alt": "A",
-    "disease": "Breast Cancer",
-    "description": "BRCA1 pathogenic variant",
-    "isAgeSpecific": true,
-    "agePenetrance": [
-      {"age": 30, "penetrance": 0.03},
-      {"age": 40, "penetrance": 0.19},
-      {"age": 50, "penetrance": 0.50}
-    ],
-    "alleleFrequency": 0.0001,
-    "geneImpact": "High",
-    "classification": "Pathogenic",
-    "oddsRatio": 5.0
-  }
-]
-```
-
-## 📊 Output
-
-The program generates:
-
-1. **Console Report**: Detailed text-based risk assessment showing:
-   - Detected variants and their genotypes
-   - Disease-specific risk percentages
-   - Polygenic risk scores for common diseases
-   - Quality warnings for low-confidence calls
-
-2. **Visual Plot** (`risk_plot.png`): 
-   - Bar chart showing risk percentages with confidence intervals
-   - Automatically opened after analysis (on supported systems)
-
-3. **Data File** (`plot_data.txt`):
-   - Tab-delimited file with risk data for further analysis
-
-## ⚠️ Important Disclaimers
-
-- **Not for Clinical Use**: This tool is for research and educational purposes only
-- **Consult Healthcare Professionals**: Always discuss genetic test results with qualified healthcare providers
-- **Data Privacy**: Handle genetic data responsibly and ensure proper security measures
-- **Accuracy Limitations**: Results depend on the quality and completeness of input data and disease databases
-
-## 🔬 Technical Details
-
-### Risk Calculation Methodology
-
-1. **Base Penetrance**: Retrieved from age-specific lookup tables
-2. **Genotype Adjustment**: Modified based on heterozygous (0/1) or homozygous (1/1) status
-3. **Factor Modulation**: Adjusted using environmental and risk factor multipliers
-4. **PRS Calculation**: Sum of log-odds ratios across multiple variants
-
-### Quality Control
-
-- Minimum variant quality score: 20
-- Minimum read depth: 10
-- Warnings displayed for low-quality calls
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit issues, fork the repository, and create pull requests.
-
-### Areas for Contribution
-
-- Additional disease databases
-- Support for more file formats
-- Improved visualization options
-- Population-specific frequency databases
-- Enhanced PRS algorithms
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **nlohmann/json**: Excellent JSON library for C++
-- **Gnuplot**: Powerful plotting utility
-- **ACMG Guidelines**: Framework for variant classification
-- The genomics research community for open data standards
-
-## 📧 Contact
-
-For questions, suggestions, or collaborations, please open an issue on GitHub or contact [your-email@example.com].
-
-## 🔗 Resources
-
-- [VCF Format Specification](https://samtools.github.io/hts-specs/VCFv4.2.pdf)
-- [ACMG Variant Classification Guidelines](https://www.acmg.net/)
-- [ClinVar Database](https://www.ncbi.nlm.nih.gov/clinvar/)
-- [gnomAD Population Frequencies](https://gnomad.broadinstitute.org/)
-
----
-
-**Remember**: Genetic information is complex and probabilistic. This tool provides risk estimates based on current scientific knowledge, which is constantly evolving. Always seek professional genetic counseling for personalized interpretation.
+MIT. See `LICENSE`.

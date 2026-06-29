@@ -1,0 +1,24 @@
+{
+  "name": "genetic-risk-analyzer",
+  "version": "2.2.0",
+  "private": true,
+  "description": "Privacy-first educational genomic variant interpretation web application",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node --watch server/index.js",
+    "start": "node server/index.js",
+    "test": "node --test",
+    "check": "node --check server/index.js && node --check public/app.js && npm test",
+    "audit:data": "node scripts/audit-dataset.js",
+    "audit:data:strict": "node scripts/audit-dataset.js --strict"
+  },
+  "dependencies": {
+    "express": "5.1.0",
+    "express-rate-limit": "8.5.2",
+    "helmet": "8.1.0",
+    "multer": "2.2.0"
+  }
+}

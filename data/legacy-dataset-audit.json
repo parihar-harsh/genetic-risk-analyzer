@@ -1,0 +1,19 @@
+{
+  "sourceRelease": "ClinVar GRCh38 2026-06-27",
+  "legacyEntries": 94,
+  "exactAlleleMatches": 2,
+  "unsupportedEntries": 92,
+  "conclusion": "The legacy illustrative dataset was replaced rather than promoted because 92 entries had no exact ClinVar allele match and both exact matches contradicted the claimed gene or condition.",
+  "contradictoryMatches": [
+    {
+      "locus": "11:113400000:C:T",
+      "legacyClaim": "Schizophrenia risk variant rs1800497 near DRD2/ANKK1",
+      "clinvarRecord": "VariationID:3045786; rs1431194415; ANKK1-related disorder; Likely benign"
+    },
+    {
+      "locus": "1:202000000:G:A",
+      "legacyClaim": "Osteoporosis risk variant rs3736228 in LRP5",
+      "clinvarRecord": "VariationID:4579098; RNPEP; not specified; Uncertain significance"
+    }
+  ]
+}

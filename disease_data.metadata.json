@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "clinvar-2026-06-27",
+  "genomeBuild": "GRCh38",
+  "releasedAt": "2026-06-27",
+  "provenanceStatus": "source-matched",
+  "clinicalUseApproved": false,
+  "description": "Exact GRCh38 allele matches imported from the named ClinVar release. Classifications remain submitted assertions and are not independent clinical validation.",
+  "requiredEvidenceFields": [
+    "sourceName",
+    "accession",
+    "reviewStatus",
+    "reviewStars",
+    "sourceRelease",
+    "effectEstimateValidated"
+  ],
+  "source": {
+    "name": "ClinVar",
+    "url": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz",
+    "release": "2026-06-27",
+    "md5": "27166aac6887cb7ac10829de69587993",
+    "recordsScanned": 4439382
+  }
+}

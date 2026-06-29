@@ -1,0 +1,12 @@
+node_modules/
+.env
+.DS_Store
+coverage/
+npm-debug.log*
+*.log
+
+# Runtime output from the legacy C++ application
+plot_data.txt
+risk_plot.png
+genetic_risk_analyzer
+genetic_risk_analyzer.exe
